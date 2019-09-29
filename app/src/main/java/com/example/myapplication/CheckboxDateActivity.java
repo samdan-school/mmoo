@@ -13,10 +13,10 @@ import java.util.Calendar;
 
 public class CheckboxDateActivity extends StateHelper implements View.OnClickListener {
     private Bundle state = new Bundle();
-    CheckBox cb1;
-    CheckBox cb2;
-    CheckBox cb3;
-    DatePicker dp;
+    private CheckBox cb1;
+    private CheckBox cb2;
+    private CheckBox cb3;
+    private DatePicker dp;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +34,6 @@ public class CheckboxDateActivity extends StateHelper implements View.OnClickLis
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
-        Log.i("CDATE", year + " " + month + " " + day);
         dp.init(year, month, day, null);
 
         findViewById(R.id.btnSave).setOnClickListener(this);

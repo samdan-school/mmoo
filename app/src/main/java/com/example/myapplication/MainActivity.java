@@ -10,6 +10,8 @@ import android.view.View;
 public class MainActivity extends StateHelper implements View.OnClickListener {
     private Bundle bundleNameAge;
     private Bundle bundleCheckboxDate;
+    private Bundle bundleRadioTime;
+    private Bundle bundleRatingTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,8 @@ public class MainActivity extends StateHelper implements View.OnClickListener {
         if (bundle != null) {
             bundleNameAge = bundle.getBundle(SAVE_NAME_AGE);
             bundleCheckboxDate = bundle.getBundle(SAVE_CHECKBOX_DATE);
+            bundleRadioTime = bundle.getBundle(SAVE_RADIO_TIME);
+            bundleRatingTime = bundle.getBundle(SAVE_RATING_TIME);
         }
     }
 
@@ -48,11 +52,13 @@ public class MainActivity extends StateHelper implements View.OnClickListener {
             case R.id.btnRadioTimePicker:
                 Log.i("Main", "radio");
                 intent.setAction("rt");
+                intent.putExtra(SAVE_RADIO_TIME, bundleRadioTime);
                 break;
 
             case R.id.btnRatingBarTimePicker:
                 Log.i("Main", "rating");
                 intent.setAction("rbt");
+                intent.putExtra(SAVE_RATING_TIME, bundleRatingTime);
                 break;
             default:
                 Log.e("Main", "No activity found");

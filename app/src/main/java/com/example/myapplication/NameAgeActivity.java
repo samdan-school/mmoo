@@ -8,8 +8,8 @@ import android.widget.EditText;
 public class NameAgeActivity extends StateHelper {
     private Bundle state = new Bundle();
 
-    EditText etName;
-    EditText etAge;
+    private EditText etName;
+    private EditText etAge;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
