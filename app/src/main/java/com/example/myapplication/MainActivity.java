@@ -39,31 +39,59 @@ public class MainActivity extends StateHelper implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.btnNameAge:
                 Log.i("Main", "name age");
-                intent.setAction("na");
-                intent.putExtra(SAVE_NAME_AGE, bundleNameAge);
+                intent.setClass(this, NameAgeActivity.class);
                 break;
 
             case R.id.btnCheckboxDate:
                 Log.i("Main", "checkbox");
-                intent.setAction("cd");
-                intent.putExtra(SAVE_CHECKBOX_DATE, bundleCheckboxDate);
+                intent.setClass(this, CheckboxDateActivity.class);
                 break;
 
             case R.id.btnRadioTimePicker:
                 Log.i("Main", "radio");
-                intent.setAction("rt");
-                intent.putExtra(SAVE_RADIO_TIME, bundleRadioTime);
+                intent.setClass(this, RadioTimeActivity.class);
                 break;
 
             case R.id.btnRatingBarTimePicker:
                 Log.i("Main", "rating");
-                intent.setAction("rbt");
-                intent.putExtra(SAVE_RATING_TIME, bundleRatingTime);
+                intent.setClass(this, RatingBarTimeActivity.class);
                 break;
             default:
                 Log.e("Main", "No activity found");
         }
 
+        intent.putExtra(SAVE_NAME_AGE, bundleNameAge);
+        intent.putExtra(SAVE_CHECKBOX_DATE, bundleCheckboxDate);
+        intent.putExtra(SAVE_RADIO_TIME, bundleRadioTime);
+        intent.putExtra(SAVE_RATING_TIME, bundleRatingTime);
         startActivity(intent);
     }
+
+//    switch (view.getId()) {
+//        case R.id.btnNameAge:
+//            Log.i("Main", "name age");
+//            intent.setAction("na");
+//            intent.putExtra(SAVE_NAME_AGE, bundleNameAge);
+//            break;
+//
+//        case R.id.btnCheckboxDate:
+//            Log.i("Main", "checkbox");
+//            intent.setAction("cd");
+//            intent.putExtra(SAVE_CHECKBOX_DATE, bundleCheckboxDate);
+//            break;
+//
+//        case R.id.btnRadioTimePicker:
+//            Log.i("Main", "radio");
+//            intent.setAction("rt");
+//            intent.putExtra(SAVE_RADIO_TIME, bundleRadioTime);
+//            break;
+//
+//        case R.id.btnRatingBarTimePicker:
+//            Log.i("Main", "rating");
+//            intent.setAction("rbt");
+//            intent.putExtra(SAVE_RATING_TIME, bundleRatingTime);
+//            break;
+//        default:
+//            Log.e("Main", "No activity found");
+//    }
 }

@@ -32,6 +32,16 @@ abstract class StateHelper extends AppCompatActivity implements View.OnClickList
     static public final String RATING = "RATING";
 
     public void saveState(Intent intent, String stateName, boolean bSave, Bundle... state) {
+        Bundle bundle = getIntent().getExtras();
+        for (String name : new String[] {
+                SAVE_NAME_AGE,
+                SAVE_CHECKBOX_DATE,
+                SAVE_RADIO_TIME,
+                SAVE_RATING_TIME
+        }) {
+            if (!name.equals(stateName) && bundle != null)
+                intent.putExtra(name, bundle.getBundle(name));
+        }
         if (bSave) {
             intent.putExtra(stateName, state[0]);
         }
