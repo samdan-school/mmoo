@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Switch;
 
 public class MainActivity extends StateHelper implements View.OnClickListener {
-    private String name;
-    private String age;
+    private boolean bNameAge = false;
+    private boolean bCheckboxDate = false;
+    private Bundle bundleNameAge = new Bundle();
+    private Bundle bundleCheckboxDate = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +26,8 @@ public class MainActivity extends StateHelper implements View.OnClickListener {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            name = bundle.getString(NameAgeActivity.NAME);
-            age = bundle.getString(NameAgeActivity.AGE);
-
-            Log.i("Main", "check name and age " + name + " " + age);
+            bundleNameAge = bundle.getBundle(SAVE_NAME_AGE);
+            bundleCheckboxDate = bundle.getBundle(SAVE_CHECKBOX_DATE);
         }
     }
 
@@ -40,12 +38,13 @@ public class MainActivity extends StateHelper implements View.OnClickListener {
             case R.id.btnNameAge:
                 Log.i("Main", "name age");
                 intent.setAction("na");
-                sendState(intent, NAME, AGE);
+                intent.putExtra(SAVE_NAME_AGE, bundleNameAge);
                 break;
 
             case R.id.btnCheckboxDate:
                 Log.i("Main", "checkbox");
                 intent.setAction("cd");
+                intent.putExtra(SAVE_CHECKBOX_DATE, bundleCheckboxDate);
                 break;
 
             case R.id.btnRadioTimePicker:
@@ -62,15 +61,5 @@ public class MainActivity extends StateHelper implements View.OnClickListener {
         }
 
         startActivity(intent);
-    }
-
-    private void sendState(Intent intent, String... args) {
-        for (String arg : args) {
-            if (arg.equals(NAME)) {
-                intent.putExtra(NAME, name);
-            } else if (arg.equals(AGE)) {
-                intent.putExtra(AGE, age);
-            }
-        }
     }
 }

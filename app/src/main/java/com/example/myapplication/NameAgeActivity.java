@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.EditText;
 
 public class NameAgeActivity extends StateHelper {
+    private Bundle state = new Bundle();
+
     EditText etName;
     EditText etAge;
 
@@ -20,6 +22,7 @@ public class NameAgeActivity extends StateHelper {
         findViewById(R.id.btnCancel).setOnClickListener(this);
 
         restoreState(
+                SAVE_NAME_AGE,
                 new State(etName, NAME),
                 new State(etAge, AGE)
         );
@@ -28,14 +31,16 @@ public class NameAgeActivity extends StateHelper {
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this, MainActivity.class);
+
         switch (view.getId()) {
             case R.id.btnSave:
-                saveState(intent, true,
-                        new State<>(NAME, etName.getText().toString()),
-                        new State<>(AGE, etAge.getText().toString()));
+                state.putString(NAME, etName.getText().toString());
+                state.putString(AGE, etAge.getText().toString());
+
+                saveState(intent, SAVE_NAME_AGE, true, state);
                 break;
             case R.id.btnCancel:
-                saveState(intent, false);
+                saveState(intent, SAVE_NAME_AGE, false);
                 break;
         }
         startActivity(intent);
