@@ -8,10 +8,8 @@ import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends StateHelper implements View.OnClickListener {
-    private boolean bNameAge = false;
-    private boolean bCheckboxDate = false;
-    private Bundle bundleNameAge = new Bundle();
-    private Bundle bundleCheckboxDate = new Bundle();
+    private Bundle bundleNameAge;
+    private Bundle bundleCheckboxDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

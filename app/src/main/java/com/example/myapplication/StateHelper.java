@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +17,11 @@ abstract class StateHelper extends AppCompatActivity implements View.OnClickList
     static public final String CB1 = "CB1";
     static public final String CB2 = "CB2";
     static public final String CB3 = "CB3";
+    static public final String YEAR = "YEAR";
+    static public final String MONTH = "MONTH";
+    static public final String DAY = "DAY";
 
-    public void saveState(Intent intent, String stateName , boolean bSave,Bundle... state) {
+    public void saveState(Intent intent, String stateName, boolean bSave, Bundle... state) {
         if (bSave) {
             intent.putExtra(stateName, state[0]);
         }
@@ -35,6 +39,12 @@ abstract class StateHelper extends AppCompatActivity implements View.OnClickList
                     ((EditText) state.view).setText(stateBundle.getString(state.key));
                 } else if (state.view instanceof CheckBox) {
                     ((CheckBox) state.view).setChecked(stateBundle.getBoolean(state.key));
+                } else if (state.view instanceof DatePicker) {
+                    ((DatePicker) state.view).updateDate(
+                            stateBundle.getInt(YEAR),
+                            stateBundle.getInt(MONTH),
+                            stateBundle.getInt(DAY)
+                    );
                 }
             }
         }
@@ -47,6 +57,10 @@ abstract class StateHelper extends AppCompatActivity implements View.OnClickList
         State(View view, String key) {
             this.view = view;
             this.key = key;
+        }
+
+        State(View view) {
+            this.view = view;
         }
     }
 }
