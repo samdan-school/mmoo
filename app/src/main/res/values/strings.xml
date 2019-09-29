@@ -18,4 +18,8 @@
     <string name="female">Female</string>
     <string name="time">Time Picker</string>
     <string name="rate">Rating Bar</string>
+
+    <string name="call">Call</string>
+    <string name="alarm">Alarm</string>
+    <string name="web_search">SISI</string>
 </resources>

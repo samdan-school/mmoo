@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/mNameAge"
+            android:title="@string/name_age" />
+    <item
+            android:id="@+id/mCheckboxDate"
+            android:title="@string/checkbox_date" />
+    <item
+            android:id="@+id/mRadioTimePicker"
+            android:title="@string/radio_time_picker" />
+    <item
+            android:id="@+id/mRatingBarTimePicker"
+            android:title="@string/rating_bar_time_picker" />
+</menu>

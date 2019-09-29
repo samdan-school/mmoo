@@ -1,11 +1,16 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+
+import static android.content.Intent.ACTION_DIAL;
 
 public class MainActivity extends StateHelper implements View.OnClickListener {
     private Bundle bundleNameAge;
@@ -23,6 +28,11 @@ public class MainActivity extends StateHelper implements View.OnClickListener {
         findViewById(R.id.btnCheckboxDate).setOnClickListener(this);
         findViewById(R.id.btnRadioTimePicker).setOnClickListener(this);
         findViewById(R.id.btnRatingBarTimePicker).setOnClickListener(this);
+        findViewById(R.id.btnCall).setOnClickListener(this);
+        findViewById(R.id.btnAlarm).setOnClickListener(this);
+        findViewById(R.id.btnWebSearch).setOnClickListener(this);
+
+        registerForContextMenu(findViewById(R.id.menu));
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -56,6 +66,23 @@ public class MainActivity extends StateHelper implements View.OnClickListener {
                 Log.i("Main", "rating");
                 intent.setClass(this, RatingBarTimeActivity.class);
                 break;
+
+            case R.id.btnCall:
+                Log.i("Main", "call");
+                intent.setAction(ACTION_DIAL);
+                break;
+
+            case R.id.btnAlarm:
+                Log.i("Main", "ACTION_SHOW_ALARMS");
+                intent.setAction(AlarmClock.ACTION_SHOW_ALARMS);
+                break;
+
+            case R.id.btnWebSearch:
+                Log.i("Main", "ACTION_WEB_SEARCH");
+                intent.setAction(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, "https://sisi.num.edu.mn");
+                break;
+
             default:
                 Log.e("Main", "No activity found");
         }
@@ -67,31 +94,46 @@ public class MainActivity extends StateHelper implements View.OnClickListener {
         startActivity(intent);
     }
 
-//    switch (view.getId()) {
-//        case R.id.btnNameAge:
-//            Log.i("Main", "name age");
-//            intent.setAction("na");
-//            intent.putExtra(SAVE_NAME_AGE, bundleNameAge);
-//            break;
-//
-//        case R.id.btnCheckboxDate:
-//            Log.i("Main", "checkbox");
-//            intent.setAction("cd");
-//            intent.putExtra(SAVE_CHECKBOX_DATE, bundleCheckboxDate);
-//            break;
-//
-//        case R.id.btnRadioTimePicker:
-//            Log.i("Main", "radio");
-//            intent.setAction("rt");
-//            intent.putExtra(SAVE_RADIO_TIME, bundleRadioTime);
-//            break;
-//
-//        case R.id.btnRatingBarTimePicker:
-//            Log.i("Main", "rating");
-//            intent.setAction("rbt");
-//            intent.putExtra(SAVE_RATING_TIME, bundleRatingTime);
-//            break;
-//        default:
-//            Log.e("Main", "No activity found");
-//    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.link_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        Intent intent = new Intent();
+        switch (item.getItemId()) {
+            case R.id.mNameAge:
+                Log.i("Main", "Menu name age");
+                intent.setAction("na");
+                break;
+
+            case R.id.mCheckboxDate:
+                Log.i("Main", "Menu checkbox");
+                intent.setAction("cd");
+                break;
+
+            case R.id.mRadioTimePicker:
+                Log.i("Main", "Menu radio");
+                intent.setAction("rt");
+                break;
+
+            case R.id.mRatingBarTimePicker:
+                Log.i("Main", "Menu rating");
+                intent.setAction("rbt");
+                break;
+            default:
+                Log.e("Main", "Menu No activity found");
+                return super.onContextItemSelected(item);
+        }
+
+        intent.putExtra(SAVE_NAME_AGE, bundleNameAge);
+        intent.putExtra(SAVE_CHECKBOX_DATE, bundleCheckboxDate);
+        intent.putExtra(SAVE_RADIO_TIME, bundleRadioTime);
+        intent.putExtra(SAVE_RATING_TIME, bundleRatingTime);
+        startActivity(intent);
+        return true;
+    }
 }
