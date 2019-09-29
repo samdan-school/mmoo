@@ -2,20 +2,10 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class NameAgeActivity extends AppCompatActivity implements View.OnClickListener {
-    // saved instance state key name
-    private final String SAVE = "save";
-    private final String NAME = "name";
-    private final String AGE = "age";
-
-    private boolean bSave;
+public class NameAgeActivity extends StateHelper {
     EditText etName;
     EditText etAge;
 
@@ -29,41 +19,25 @@ public class NameAgeActivity extends AppCompatActivity implements View.OnClickLi
         findViewById(R.id.btnSave).setOnClickListener(this);
         findViewById(R.id.btnCancel).setOnClickListener(this);
 
-        if (savedInstanceState != null) {
-            if (savedInstanceState.getBoolean(SAVE)) {
-                etName.setText(savedInstanceState.getString(NAME));
-                etAge.setText(savedInstanceState.getString(AGE));
-            }
-            Log.i("Name", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        }
-        Log.i("Name", "djaskdhkashdkhaskdhkjashdjkjhaskjdhjkashjdkh");
+        restoreState(
+                new State(etName, NAME),
+                new State(etAge, AGE)
+        );
     }
 
     @Override
     public void onClick(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
         switch (view.getId()) {
             case R.id.btnSave:
-                bSave = true;
-                Log.i("Name Age", "Save");
+                saveState(intent, true,
+                        new State<>(NAME, etName.getText().toString()),
+                        new State<>(AGE, etAge.getText().toString()));
                 break;
             case R.id.btnCancel:
-                bSave = false;
-                Log.i("Name Age", "Cancel");
+                saveState(intent, false);
                 break;
         }
-
-        this.onPause();
-        startActivity(new Intent(getBaseContext(), MainActivity.class));
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putBoolean(SAVE, bSave);
-        savedInstanceState.putString(NAME, etName.getText().toString());
-        savedInstanceState.putString(AGE, etAge.getText().toString());
-
-        Log.i("name", savedInstanceState.getString(NAME));
-        super.onSaveInstanceState(savedInstanceState);
-        Log.i("Name", "save Instance state");
+        startActivity(intent);
     }
 }

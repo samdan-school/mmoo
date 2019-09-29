@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends StateHelper implements View.OnClickListener {
+    private String name;
+    private String age;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,15 +23,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btnCheckboxDate).setOnClickListener(this);
         findViewById(R.id.btnRadioTimePicker).setOnClickListener(this);
         findViewById(R.id.btnRatingBarTimePicker).setOnClickListener(this);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            name = bundle.getString(NameAgeActivity.NAME);
+            age = bundle.getString(NameAgeActivity.AGE);
+
+            Log.i("Main", "check name and age " + name + " " + age);
+        }
     }
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent("main");
+        Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.btnNameAge:
                 Log.i("Main", "name age");
                 intent.setAction("na");
+                sendState(intent, NAME, AGE);
                 break;
 
             case R.id.btnCheckboxDate:
@@ -50,5 +62,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         startActivity(intent);
+    }
+
+    private void sendState(Intent intent, String... args) {
+        for (String arg : args) {
+            if (arg.equals(NAME)) {
+                intent.putExtra(NAME, name);
+            } else if (arg.equals(AGE)) {
+                intent.putExtra(AGE, age);
+            }
+        }
     }
 }
